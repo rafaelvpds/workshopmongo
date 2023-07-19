@@ -34,4 +34,11 @@ public class PostResource {
 		return ResponseEntity.ok().body(list);
 	}
 
+	@GetMapping(value = "/searchtitle") // Para o endpoint identificar o nome do parametro que demos
+	public ResponseEntity<List<Post>> findSearchTitle(@RequestParam(value = "text", defaultValue = "") String text) {
+		text = URL.decodeParam(text);
+		List<Post> list = postService.findBySearchTitle(text);
+		return ResponseEntity.ok().body(list);
+	}
+
 }
