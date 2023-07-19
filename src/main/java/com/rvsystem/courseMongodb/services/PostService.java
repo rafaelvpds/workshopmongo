@@ -1,5 +1,6 @@
 package com.rvsystem.courseMongodb.services;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,10 @@ public class PostService {
 		Optional<Post> obj = postRepository.findById(id);
 
 		return obj.orElseThrow(() -> new ObjectNotFoundException("Id not found " + id));
+	}
+
+	public List<Post> findByTitle(String text) {
+		return postRepository.findByTitleContainingIgnoreCase(text);
 	}
 
 }
