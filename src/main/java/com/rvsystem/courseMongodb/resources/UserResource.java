@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import com.rvsystem.courseMongodb.domain.Post;
 import com.rvsystem.courseMongodb.domain.User;
 import com.rvsystem.courseMongodb.dto.UserDto;
 import com.rvsystem.courseMongodb.services.UserService;
@@ -59,7 +60,7 @@ public class UserResource {
 		return ResponseEntity.noContent().build();
 	}
 
-@PutMapping(value = "/{id}")
+	@PutMapping(value = "/{id}")
 	public ResponseEntity<User> update(@PathVariable String id, @RequestBody UserDto objDto) {
 		User obj = userService.fromDto(objDto);
 		obj.setId(id);
@@ -67,6 +68,12 @@ public class UserResource {
 
 		return ResponseEntity.noContent().build();
 
+	}
+
+	@RequestMapping(value = "/{id}/posts", method = RequestMethod.GET)
+	public ResponseEntity<List<Post>> findPosts(@PathVariable String id) {
+		User obj = userService.findById(id);
+		return ResponseEntity.ok().body(obj.getPosts());
 	}
 
 }
